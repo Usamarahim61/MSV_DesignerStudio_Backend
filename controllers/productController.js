@@ -8,6 +8,9 @@ const getProducts = async (req, res) => {
       category,
       subcategory,
       fabric,
+      brand,
+      scentType,
+      gender,
       search,
       minPrice,
       maxPrice,
@@ -30,7 +33,34 @@ const getProducts = async (req, res) => {
     }
 
     if (fabric) {
-      query.fabric = { $regex: `^${fabric}$`, $options: "i" };
+      const fabrics = fabric.split(',').map(f => f.trim()).filter(f => f);
+      if (fabrics.length > 1) {
+        query.fabric = { $in: fabrics.map(f => new RegExp(`^${f}$`, 'i')) };
+      } else if (fabrics.length === 1) {
+        query.fabric = { $regex: `^${fabrics[0]}$`, $options: "i" };
+      }
+    }
+
+    if (brand) {
+      const brands = brand.split(',').map(b => b.trim()).filter(b => b);
+      if (brands.length > 1) {
+        query.brand = { $in: brands.map(b => new RegExp(`^${b}$`, 'i')) };
+      } else if (brands.length === 1) {
+        query.brand = { $regex: `^${brands[0]}$`, $options: "i" };
+      }
+    }
+
+    if (scentType) {
+      const scentTypes = scentType.split(',').map(s => s.trim()).filter(s => s);
+      if (scentTypes.length > 1) {
+        query.scentType = { $in: scentTypes.map(s => new RegExp(`^${s}$`, 'i')) };
+      } else if (scentTypes.length === 1) {
+        query.scentType = { $regex: `^${scentTypes[0]}$`, $options: "i" };
+      }
+    }
+
+    if (gender) {
+      query.gender = { $in: gender.split(',').map(g => g.trim()) };
     }
 
     if (productType) {
