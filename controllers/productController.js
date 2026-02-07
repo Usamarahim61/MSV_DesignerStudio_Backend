@@ -143,7 +143,21 @@ const createProduct = async (req, res) => {
         productData.hoverImage = req.files.hoverImage[0].path;
       }
       if (req.files.images) {
-        productData.images = req.files.images.map(file => file.path);
+        // Get remaining images from the form data (after deletions)
+        let remainingImages = [];
+        if (productData.images) {
+          if (typeof productData.images === 'string') {
+            remainingImages = JSON.parse(productData.images);
+          } else if (Array.isArray(productData.images)) {
+            remainingImages = productData.images;
+          }
+        }
+
+        // Add new uploaded images
+        const newImages = req.files.images.map(file => file.path);
+
+        // Merge remaining images with new images
+        productData.images = [...remainingImages, ...newImages];
       }
     }
 
@@ -151,8 +165,9 @@ const createProduct = async (req, res) => {
     if (typeof productData.details === 'string') {
       productData.details = JSON.parse(productData.details);
     }
+    // Remove images from productData if it's still a string (already handled above)
     if (typeof productData.images === 'string') {
-      productData.images = JSON.parse(productData.images);
+      delete productData.images;
     }
 
     const product = new Product(productData);
@@ -198,7 +213,19 @@ const updateProduct = async (req, res) => {
         productData.hoverImage = req.files.hoverImage[0].path;
       }
       if (req.files.images) {
-        productData.images = req.files.images.map(file => file.path);
+        // Get remaining images from the form data (after deletions)
+        let remainingImages = [];
+        if (typeof productData.images === 'string') {
+          remainingImages = JSON.parse(productData.images);
+        } else if (Array.isArray(productData.images)) {
+          remainingImages = productData.images;
+        }
+
+        // Add new uploaded images
+        const newImages = req.files.images.map(file => file.path);
+
+        // Merge remaining images with new images
+        productData.images = [...remainingImages, ...newImages];
       }
     }
 
@@ -206,8 +233,9 @@ const updateProduct = async (req, res) => {
     if (typeof productData.details === 'string') {
       productData.details = JSON.parse(productData.details);
     }
+    // Remove images from productData if it's still a string (already handled above)
     if (typeof productData.images === 'string') {
-      productData.images = JSON.parse(productData.images);
+      delete productData.images;
     }
 
     const product = await Product.findByIdAndUpdate(
