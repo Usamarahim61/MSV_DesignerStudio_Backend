@@ -28,6 +28,11 @@ const createBanner = async (req, res) => {
   try {
     const bannerData = {};
 
+    // Handle path field
+    if (req.body.path && req.body.path.trim() !== '') {
+      bannerData.path = req.body.path.trim();
+    }
+
     // Handle image upload
     if (req.files && req.files.image && req.files.image[0]) {
       bannerData.imageUrl = req.files.image[0].path;
@@ -47,8 +52,8 @@ const createBanner = async (req, res) => {
 const updateBanner = async (req, res) => {
   try {
     const { id } = req.params;
-    const { title, altText, isActive, order } = req.body;
-    const updateData = { title, altText, isActive, order };
+    const { title, altText, isActive, order, path } = req.body;
+    const updateData = { title, altText, isActive, order, path };
 
     // Find the existing banner to get the current image
     const existingBanner = await Banner.findById(id);
