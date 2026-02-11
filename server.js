@@ -10,12 +10,13 @@ const productRoutes = require('./routes/products');
 const bannerRoutes = require('./routes/banners');
 const landingSectionRoutes = require('./routes/landingPageSections');
 const contactRoutes = require('./routes/contacts');
+const orderRoutes = require('./routes/orders');
 
 
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 
 // Middleware
 app.use(cors());
@@ -29,6 +30,7 @@ app.use('/api/products', productRoutes);
 app.use('/api/banners', bannerRoutes);
 app.use('/api/landingPageSections', landingSectionRoutes);
 app.use('/api/contacts', contactRoutes);
+app.use('/api/orders', orderRoutes);
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGODB_URI, {
