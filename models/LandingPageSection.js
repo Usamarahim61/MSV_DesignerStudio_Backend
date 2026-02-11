@@ -6,6 +6,10 @@ const landingPageSectionSchema = new mongoose.Schema({
       type: String,
       required: true
     },
+    path: {
+      type: String,
+      default: ''
+    },
     subTitle: {
       type: String,
       default: ''

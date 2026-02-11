@@ -135,7 +135,7 @@ const getAllSections = async (req, res) => {
 // Create new section
 const createSection = async (req, res) => {
   try {
-    const { banner, category, categoryName,  discount , fabricType, subcategory, isActive, mainTitle, subTitle , tagLine, season, productSelectionMode, manualProducts, order } = req.body;
+    const { banner, category, categoryName,  discount , fabricType, subcategory, isActive, mainTitle, subTitle , tagLine, season, productSelectionMode, manualProducts, order, path } = req.body;
 
     const newSection = new LandingPageSection({
       banner: {
@@ -146,7 +146,8 @@ const createSection = async (req, res) => {
         discount: discount,
         categoryName: categoryName,
         season: season,
-        fabricType: fabricType
+        fabricType: fabricType,
+        path: path
       },
       category,
       subcategory,
@@ -167,7 +168,7 @@ const createSection = async (req, res) => {
 const updateSection = async (req, res) => {
   try {
     const { id } = req.params;
-    const { subTitle, mainTitle, tagLine, discount, categoryName, season, fabricType, category, subcategory, productSelectionMode, manualProducts, order, isActive } = req.body;
+    const { subTitle, mainTitle, tagLine, discount, categoryName, season, fabricType, path, category, subcategory, productSelectionMode, manualProducts, order, isActive } = req.body;
 
     // Find the existing section to get the current image
     const existingSection = await LandingPageSection.findById(id);
@@ -194,7 +195,8 @@ const updateSection = async (req, res) => {
         discount,
         categoryName,
         season,
-        fabricType
+        fabricType,
+        path
       },
       category,
       subcategory,
