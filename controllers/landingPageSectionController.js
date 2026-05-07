@@ -42,7 +42,7 @@ const { cloudinary } = require('../config/cloudinary');
 const getLandingPageSections = async (req, res) => {
   try {
     const sections = await LandingPageSection.find()
-      .sort({ order: 1 })
+      .sort({ order: -1 })
       .populate('manualProducts');
 
     const sectionsWithProducts = await Promise.all(
