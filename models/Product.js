@@ -109,6 +109,13 @@ const productSchema = new mongoose.Schema({
     default: '',
     maxlength: 100
     
+  },
+  sizeOptions: {
+    type: [String],
+    default: []
+  },
+  sizeChartImage: {
+    type: String
   }
 }, {
   timestamps: true

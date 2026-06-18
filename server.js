@@ -26,11 +26,13 @@ app.use(express.urlencoded({ limit: '50mb', extended: true }));
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/categories', categoryRoutes);
+app.use('/api/shopByCategories', require('./routes/shopByCategories'));
 app.use('/api/products', productRoutes);
 app.use('/api/banners', bannerRoutes);
 app.use('/api/landingPageSections', landingSectionRoutes);
 app.use('/api/contacts', contactRoutes);
 app.use('/api/orders', orderRoutes);
+
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGODB_URI, {

@@ -31,31 +31,29 @@ router.get('/:id', getProductById);
 // @route   POST /api/products
 // @desc    Create new product
 // @access  Private
-router.post("/", verifyToken, (req, res, next) => {
+router.post("/", (req, res, next) => {
   console.log("➡️ Request reached route");
   next();
 }, upload.fields([
   { name: "image", maxCount: 1 },
-  { name: "images", maxCount: 10 }
+  { name: "images", maxCount: 10 },
+  { name: "sizeChartImage", maxCount: 1 } 
 ]), createProduct);
-// router.post('/', upload.fields([
-//   { name: 'image', maxCount: 1 },
-//   // { name: 'hoverImage', maxCount: 1 },
-//   { name: 'images', maxCount: 10 }
-// ]), createProduct);
 
 // @route   PUT /api/products/:id
 // @desc    Update product
 // @access  Private
-router.put('/:id', verifyToken, upload.fields([
+router.put('/:id', upload.fields([
   { name: 'image', maxCount: 1 },
   { name: 'hoverImage', maxCount: 1 },
-  { name: 'images', maxCount: 10 }
+  { name: 'images', maxCount: 10 },
+  { name: 'sizeChartImage', maxCount: 1 }
 ]), updateProduct);
+
 
 // @route   DELETE /api/products/:id
 // @desc    Delete product
 // @access  Private
-router.delete('/:id', verifyToken, deleteProduct);
+router.delete('/:id', deleteProduct);
 
 module.exports = router;
