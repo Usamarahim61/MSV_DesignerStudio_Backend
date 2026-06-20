@@ -25,7 +25,7 @@ const upload = multer({
 });
 
 // Public: list active shop-by categories
-router.get('/', verifyToken,getShopByCategories);
+router.get('/',getShopByCategories);
 
 // Admin: full list
 router.get('/admin', verifyToken,getShopByCategoriesAdmin);
@@ -37,7 +37,7 @@ router.post('/', upload.single('image'), verifyToken,createShopByCategory);
 router.put('/:id', upload.single('image'), verifyToken,updateShopByCategory);
 
 // Delete
-router.delete('/:id', deleteShopByCategory);
+router.delete('/:id', verifyToken,deleteShopByCategory);
 
 module.exports = router;
 
